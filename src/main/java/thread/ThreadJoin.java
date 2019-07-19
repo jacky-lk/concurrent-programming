@@ -1,5 +1,6 @@
 package thread;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
@@ -42,6 +43,23 @@ public class ThreadJoin {
         ExecutorService executorService = Executors.newFixedThreadPool(1);
         for (int i = 1; i < 4; i++) {
             executorService.execute(new RunnableThread("T2" + i, null));
+        }
+        // 生产消费
+        ArrayBlockingQueue<RunnableThread> queue = new ArrayBlockingQueue<>(1);
+
+        for (int i = 1; i < 4; i++) {
+            queue.add(new RunnableThread("T2" + i,null));
+
+        }
+    }
+}
+
+class QueueThread implements Runnable {
+
+    @Override
+    public void run() {
+        synchronized (QueueThread.class) {
+
         }
     }
 }
