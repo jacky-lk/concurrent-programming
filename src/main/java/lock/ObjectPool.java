@@ -22,12 +22,8 @@ public class ObjectPool<T, R> {
         semaphore = new Semaphore(size);
     }
 
-    R exec(Function<T, R> function) {
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-
-        }
+    R exec(Function<T, R> function) throws InterruptedException{
+        semaphore.acquire();
         T t = null;
         try {
             t = pool.remove(0);
