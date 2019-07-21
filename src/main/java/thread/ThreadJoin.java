@@ -45,16 +45,24 @@ public class ThreadJoin {
             executorService.execute(new RunnableThread("T2" + i, null));
         }
         // 生产消费
-        ArrayBlockingQueue<RunnableThread> queue = new ArrayBlockingQueue<>(1);
+        ArrayBlockingQueue<QueueThread> queue = new ArrayBlockingQueue<>(1);
 
         for (int i = 1; i < 4; i++) {
-            queue.add(new RunnableThread("T2" + i,null));
+            queue.add(new QueueThread(queue, "T3" + i));
 
         }
     }
 }
 
 class QueueThread implements Runnable {
+    private ArrayBlockingQueue<QueueThread> queue;
+
+    private String name;
+
+    public QueueThread(ArrayBlockingQueue<QueueThread> queue, String name) {
+        this.queue = queue;
+        this.name = name;
+    }
 
     @Override
     public void run() {
